@@ -1,7 +1,25 @@
 html,body{
 	height: 100%;
+	padding: 0;
+	margin: 0;
 }
 .map {
     height: calc( 100% - 300px);
     width: 100%;
+}
+
+/**
+ * Overrides
+ */
+.ol-control {
+     background-color: rgba(255,255,255,0); 
+    border-radius: 2px;
+}
+.ol-control button {
+    background-color: rgba(34, 34, 39,.9);
+}
+
+.ol-control button:focus, .ol-control button:hover {
+    text-decoration: none;
+    background-color: rgba(64, 62, 66,.7);
 }
