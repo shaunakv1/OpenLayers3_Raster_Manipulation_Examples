@@ -8,6 +8,40 @@ html,body{
     width: 100%;
 }
 
+
+/**
+ * legend
+ */
+ *, *:before, *:after {box-sizing:  border-box !important;}
+
+
+ .controls {
+  -moz-column-width: 15em;
+  -webkit-column-width: 15em;
+  -moz-column-gap: 0.2em;
+  -webkit-column-gap: 0.2em; 
+   
+ }
+
+ .legenditem {
+  display: inline-block;
+  margin:  0.25rem;
+  padding:  2px;
+  width:  100%; 
+  background:  #efefef;
+ }
+
+
+.legenditem .legendcolor{
+    display: inline-block;
+    border: 1px solid #eee;
+    width: 20px;  
+    height: 20px;
+}
+
+.legenditem .legendname{
+    
+}
 /**
  * Overrides
  */

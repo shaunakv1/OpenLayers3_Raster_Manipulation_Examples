@@ -17,3 +17,17 @@ var map = new ol.Map({
     zoom: 5
   })
 });
+
+/**
+ * Generate controls
+ */
+
+$(function(){
+  landcoverClasses.forEach(function(i){
+    $('#controls').append('<section class="legenditem"> <span class="legendcolor" style="background-color:'+rgbaString(i.color)+'">&nbsp;</span> <span class="legendname">'+i.name+'</span> </section>');  
+  });
+});
+
+function rgbaString(color){
+  return 'rgba('+ color[0] + ','+ color[1] + ','+ color[2] + ','+ color[3] + ')';
+}
