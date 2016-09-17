@@ -68,9 +68,11 @@ var map = new ol.Map({
 
 $(function() {
   landcoverClasses.forEach(function(i) {
-    $('#controls').append('<section class="legenditem" attr-color-id="'+i.id+'"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
+    $('#controls').append('<section class="legenditem" data-color-id="'+i.id+'"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
   });
-
+  $('.legenditem').on('click', function(evt){
+    console.log($(this).data('color-id'));
+  });
 });
 
 function rgbaString(color) {
