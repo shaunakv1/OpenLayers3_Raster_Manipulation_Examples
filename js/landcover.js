@@ -2,43 +2,22 @@
 //http://zschuessler.github.io/DeltaE/
 //https://github.com/antimatter15/rgb-lab/blob/master/color.js
 
-var modifyPixel = function(pixel, landcoverClass,colorCache,deltaECache) {
+var modifyPixel = function(pixel, landcoverClass) {
     var R = 0,G = 1,B = 2,A = 3;
     
     if (landcoverClass) {
       var matchLab = landcoverClasses[landcoverClass].colorLab;
-      var pixelLab = rgb2labFromCache(pixel);
-      var deltaEDiff = deltaEFromCache(landcoverClasses[landcoverClass].color,pixel,matchLab, pixelLab);
+      var pixelLab = rgb2lab(pixel);
+      var deltaEDiff = deltaE(matchLab, pixelLab);
 
       if (deltaEDiff > 3.0) {
         pixel[A] = 0;
       }
     }
 
-    function rgb2labFromCache(p){
-      var key = p[R]+ "" + p[G] + "" + p[B];
-      var labCached = colorCache[key];
-      if(!labCached){
-        colorCache[key] = rgb2lab(p);
-        labCached = colorCache[key];
-      }
-      return labCached;
-    }
-
-    //uses original pixels to generate cache lookup, and ml, pl (lab) pixels to calculate deltaE
-    function deltaEFromCache(m,p,ml, pl){
-      var key = ml[R]+ "" + ml[G] + "" + ml[B] + pl[R]+ "" + pl[G] + "" + pl[B];
-      var deltaECached = deltaECache[key];
-      if(!deltaECached){
-        deltaECache[key] = deltaE(ml,pl);
-        deltaECached = deltaECache[key];
-      }
-      return deltaECached;
-    }
-
     return pixel;
   }
-  
+
   /**
    * Setup landcover tile cache layer as a raster layer
    */
@@ -51,7 +30,7 @@ var landcover = new ol.source.Raster({
   ],
   operation: function(pixels, data) {
     var pixel = pixels[0];
-    return modifyPixel(pixel, data.lc_class,data.colorCache,data.deltaECache);
+    return modifyPixel(pixel, data.lc_class);
   },
   lib: {
     landcoverClasses: landcoverClasses,
@@ -65,13 +44,10 @@ landcover.set('lc_class', null);
 
 landcover.on('beforeoperations', function(event) {
   event.data.lc_class = landcover.get('lc_class');
-  event.data.colorCache = lscache.get('colorCache') || {};
-  event.data.deltaECache = lscache.get('deltaECache') || {};
 });
 
 landcover.on('afteroperations', function(event) {
-  lscache.set('colorCache',event.data.colorCache); 
-  lscache.set('deltaECache',event.data.deltaECache); 
+  
 });
 
 /**
