@@ -17,3 +17,10 @@ $(function(){
 	//console.log(colors);
 	console.log(JSON.stringify(colors));
 });
+
+function bachRGBtoLab() {
+	landcoverClasses.forEach(function(item){
+		item.colorLab = rgb2lab(item.color)
+	});
+	console.log(JSON.stringify(landcoverClasses));
+}
