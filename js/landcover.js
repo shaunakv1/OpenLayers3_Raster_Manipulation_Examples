@@ -2,19 +2,25 @@
 //http://zschuessler.github.io/DeltaE/
 //https://github.com/antimatter15/rgb-lab/blob/master/color.js
 
-var modifyPixel = function (pixel){
-  var R=0,G=1,B=2,A=3;
-  var match = [38,240,44];//[230,38,239,255];
-  var matchLab = rgb2lab(match);
-  var pixelLab = rgb2lab(pixel);
-  if(deltaE(matchLab,pixelLab) > 3.0){
-    pixel[A] = 0;
+var modifyPixel = function(pixel, landcoverClass) {
+    var R = 0,
+      G = 1,
+      B = 2,
+      A = 3;
+
+    if (landcoverClass) {
+      var match = landcoverClasses[landcoverClass].color; //[38,240,44];//[230,38,239,255];
+      var matchLab = rgb2lab(match);
+      var pixelLab = rgb2lab(pixel);
+      if (deltaE(matchLab, pixelLab) > 3.0) {
+        pixel[A] = 0;
+      }
+    }
+    return pixel;
   }
-  return pixel;
-}
-/**
- * Setup landcover tile cache layer as a raster layer
- */
+  /**
+   * Setup landcover tile cache layer as a raster layer
+   */
 var landcover = new ol.source.Raster({
   sources: [
     new ol.source.XYZ({
@@ -24,16 +30,21 @@ var landcover = new ol.source.Raster({
   ],
   operation: function(pixels, data) {
     var pixel = pixels[0];
-    return modifyPixel(pixel);
+    return modifyPixel(pixel, data.lc_class);
   },
   lib: {
-    rgb2lab:rgb2lab,
-    lab2rgb:lab2rgb,
-    deltaE:deltaE,
-    modifyPixel:modifyPixel
+    landcoverClasses: landcoverClasses,
+    rgb2lab: rgb2lab,
+    lab2rgb: lab2rgb,
+    deltaE: deltaE,
+    modifyPixel: modifyPixel
   }
 });
-//raster.set('threshold', 0.1);
+landcover.set('lc_class', null);
+
+landcover.on('beforeoperations', function(event) {
+  event.data.lc_class = landcover.get('lc_class');
+});
 
 /**
  * Map Setup
@@ -68,10 +79,11 @@ var map = new ol.Map({
 
 $(function() {
   landcoverClasses.forEach(function(i) {
-    $('#controls').append('<section class="legenditem" data-color-id="'+i.id+'"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
+    $('#controls').append('<section class="legenditem" data-color-id="' + i.id + '"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
   });
-  $('.legenditem').on('click', function(evt){
-    console.log($(this).data('color-id'));
+  $('.legenditem').on('click', function(evt) {
+    landcover.set('lc_class', $(this).data('color-id'));
+    landcover.changed();
   });
 });
 

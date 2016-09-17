@@ -1,6 +1,6 @@
 var landcoverClasses = [
   {
-    "name": "Background",
+    "name": "All",
     "color": [
       0,
       0,
@@ -389,4 +389,8 @@ var landcoverClasses = [
     ],
     "id": 25
   }
-]
+];
+Array.prototype.toString = function()
+{
+    return JSON.stringify(this);
+}
