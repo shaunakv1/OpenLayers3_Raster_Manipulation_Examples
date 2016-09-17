@@ -1,4 +1,4 @@
-var landcoverClasses = [
+[
   {
     "name": "Background",
     "color": [
@@ -11,7 +11,8 @@ var landcoverClasses = [
       0,
       0,
       0
-    ]
+    ],
+    "id": 0
   },
   {
     "name": "Unclassified",
@@ -25,7 +26,8 @@ var landcoverClasses = [
       100,
       0.00526049995830391,
       -0.010408184525267927
-    ]
+    ],
+    "id": 1
   },
   {
     "name": "Developed, High Intensity",
@@ -39,7 +41,8 @@ var landcoverClasses = [
       95.49355853071667,
       0.005056136724190807,
       -0.010003840780781204
-    ]
+    ],
+    "id": 2
   },
   {
     "name": "Developed, Medium Intensity",
@@ -53,7 +56,8 @@ var landcoverClasses = [
       65.17093947783054,
       7.7274312839426536,
       -5.437706119316399
-    ]
+    ],
+    "id": 3
   },
   {
     "name": "Developed, Low Intensity",
@@ -67,7 +71,8 @@ var landcoverClasses = [
       51.55709245041574,
       10.184786076761988,
       -0.49709782104889744
-    ]
+    ],
+    "id": 4
   },
   {
     "name": "Developed, Open Space",
@@ -81,7 +86,8 @@ var landcoverClasses = [
       78.74021442868055,
       -20.339537506611606,
       62.872219629941206
-    ]
+    ],
+    "id": 5
   },
   {
     "name": "Cultivated Crops",
@@ -95,7 +101,8 @@ var landcoverClasses = [
       19.53022093063955,
       23.172573284404614,
       27.238611787311672
-    ]
+    ],
+    "id": 6
   },
   {
     "name": "Pasture/Hay",
@@ -109,7 +116,8 @@ var landcoverClasses = [
       67.02011972176531,
       3.166425794653205,
       42.7133721493554
-    ]
+    ],
+    "id": 7
   },
   {
     "name": "Grassland/Herbaceous",
@@ -123,7 +131,8 @@ var landcoverClasses = [
       79.43287106868979,
       13.952142366397968,
       31.441689613156363
-    ]
+    ],
+    "id": 8
   },
   {
     "name": "Deciduous Forest",
@@ -137,7 +146,8 @@ var landcoverClasses = [
       83.3971592753987,
       -79.1068074000934,
       73.35366181477762
-    ]
+    ],
+    "id": 9
   },
   {
     "name": "Evergreen Forest",
@@ -151,7 +161,8 @@ var landcoverClasses = [
       19.860259315125603,
       -28.5271174150864,
       25.590148114529832
-    ]
+    ],
+    "id": 10
   },
   {
     "name": "Mixed Forest",
@@ -165,7 +176,8 @@ var landcoverClasses = [
       57.42627732739301,
       -54.35796981200991,
       39.87746416000567
-    ]
+    ],
+    "id": 11
   },
   {
     "name": "Scrub/Shrub",
@@ -179,7 +191,8 @@ var landcoverClasses = [
       43.46943477522651,
       -10.341398352739173,
       45.428017929332086
-    ]
+    ],
+    "id": 12
   },
   {
     "name": "Palustrine Forested Wetland",
@@ -193,7 +206,8 @@ var landcoverClasses = [
       34.556155060822945,
       -22.212439044651312,
       -5.898667926175005
-    ]
+    ],
+    "id": 13
   },
   {
     "name": "Palustrine Scrub/Shrub Wetland",
@@ -207,7 +221,8 @@ var landcoverClasses = [
       60.90462146401548,
       47.65299131064399,
       62.25431190088659
-    ]
+    ],
+    "id": 14
   },
   {
     "name": "Palustrine Emergent Wetland",
@@ -221,7 +236,8 @@ var landcoverClasses = [
       58.17299645450677,
       89.7728655002783,
       -55.51312729204527
-    ]
+    ],
+    "id": 15
   },
   {
     "name": "Estuarine Forested Wetland",
@@ -235,7 +251,8 @@ var landcoverClasses = [
       11.634601214738144,
       33.66605550524194,
       -20.949922378604064
-    ]
+    ],
+    "id": 16
   },
   {
     "name": "Estuarine Scrub/Shrub Wetland",
@@ -249,7 +266,8 @@ var landcoverClasses = [
       24.708171849851958,
       49.471034418594904,
       -30.791828162027002
-    ]
+    ],
+    "id": 17
   },
   {
     "name": "Estuarine Emergent Wetland",
@@ -263,7 +281,8 @@ var landcoverClasses = [
       42.31983321246585,
       70.7738516943252,
       -44.05663386946643
-    ]
+    ],
+    "id": 18
   },
   {
     "name": "Unconsolidated Shore",
@@ -277,7 +296,8 @@ var landcoverClasses = [
       87.16695745245816,
       -44.904208743485604,
       -12.72329154079619
-    ]
+    ],
+    "id": 19
   },
   {
     "name": "Bare Land",
@@ -291,7 +311,8 @@ var landcoverClasses = [
       92.32950613104084,
       -18.87557995341993,
       82.65160223695163
-    ]
+    ],
+    "id": 20
   },
   {
     "name": "Open Water",
@@ -305,7 +326,8 @@ var landcoverClasses = [
       12.986110770002803,
       40.044047060219675,
       -58.26607038625355
-    ]
+    ],
+    "id": 21
   },
   {
     "name": "Palustrine Aquatic Bed",
@@ -319,7 +341,8 @@ var landcoverClasses = [
       32.5362536925809,
       67.45260419070753,
       -97.874410054069
-    ]
+    ],
+    "id": 22
   },
   {
     "name": "Unknown",
@@ -333,7 +356,8 @@ var landcoverClasses = [
       53.30473247138133,
       20.922876892380092,
       -51.84208387831299
-    ]
+    ],
+    "id": 23
   },
   {
     "name": "Unknown",
@@ -347,7 +371,8 @@ var landcoverClasses = [
       84.62444562071568,
       -0.6069391781025613,
       77.51542379877236
-    ]
+    ],
+    "id": 24
   },
   {
     "name": "Unknown",
@@ -361,6 +386,7 @@ var landcoverClasses = [
       92.93263329316598,
       -25.397976231297136,
       -3.236263110483595
-    ]
+    ],
+    "id": 25
   }
 ]

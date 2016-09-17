@@ -19,7 +19,8 @@ $(function(){
 });
 
 function bachRGBtoLab() {
-	landcoverClasses.forEach(function(item){
+	landcoverClasses.forEach(function(item,i){
+		item.id = i;
 		item.colorLab = rgb2lab(item.color)
 	});
 	console.log(JSON.stringify(landcoverClasses));
