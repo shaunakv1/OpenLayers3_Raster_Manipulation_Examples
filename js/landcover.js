@@ -4,12 +4,13 @@
 
 var modifyPixel = function (pixel){
   var R=0,G=1,B=2,A=3;
-  var match = [230,38,239,255];
-  /*if(pixel[R] === match [R] && pixel[G] === match [G] && pixel[B] === match [B]){
-
-  }else{
+  var match = [38,240,44];//[230,38,239,255];
+  var matchLab = rgb2lab(match);
+  var pixelLab = rgb2lab(pixel);
+  //console.log(deltaE(pixelLab,matchLab));
+  if(deltaE(matchLab,pixelLab) > 3.0){
     pixel[A] = 0;
-  }*/
+  }
   return pixel;
 }
 /**
@@ -27,6 +28,9 @@ var landcover = new ol.source.Raster({
     return modifyPixel(pixel);
   },
   lib: {
+    rgb2lab:rgb2lab,
+    lab2rgb:lab2rgb,
+    deltaE:deltaE,
     modifyPixel:modifyPixel
   }
 });
