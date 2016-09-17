@@ -1,4 +1,4 @@
-[
+var landcoverClasses = [
   {
     "name": "Background",
     "color": [

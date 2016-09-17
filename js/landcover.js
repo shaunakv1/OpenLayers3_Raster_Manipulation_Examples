@@ -7,7 +7,6 @@ var modifyPixel = function (pixel){
   var match = [38,240,44];//[230,38,239,255];
   var matchLab = rgb2lab(match);
   var pixelLab = rgb2lab(pixel);
-  //console.log(deltaE(pixelLab,matchLab));
   if(deltaE(matchLab,pixelLab) > 3.0){
     pixel[A] = 0;
   }
@@ -69,8 +68,9 @@ var map = new ol.Map({
 
 $(function() {
   landcoverClasses.forEach(function(i) {
-    $('#controls').append('<section class="legenditem"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
+    $('#controls').append('<section class="legenditem" attr-color-id="'+i.id+'"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
   });
+
 });
 
 function rgbaString(color) {
