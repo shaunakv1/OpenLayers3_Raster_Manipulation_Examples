@@ -1,0 +1,70 @@
+html,body{
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+.map {
+    height: calc( 100% - 300px);
+    width: 100%;
+}
+
+
+/**
+ * legend
+ */
+ *, *:before, *:after {box-sizing:  border-box !important;}
+
+
+ .stats{
+  display: inline-block;
+  float: right;
+  width:40%;
+  padding: 10px;   
+ }
+ 
+ .controls {
+  display: inline-block;
+  float: left;
+  width:60%;
+  -moz-column-width: 15em;
+  -webkit-column-width: 15em;
+  -moz-column-gap: 0.2em;
+  -webkit-column-gap: 0.2em; 
+   
+ }
+
+ .legenditem {
+  display: inline-block;
+  margin:  0.25rem;
+  padding:  2px;
+  width:  100%; 
+  background:  #efefef;
+  cursor: pointer;
+ }
+
+
+.legenditem .legendcolor{
+    display: inline-block;
+    border: 1px solid #eee;
+    width: 20px;  
+    height: 20px;
+}
+
+.legenditem .legendname{
+    
+}
+/**
+ * Overrides
+ */
+.ol-control {
+     background-color: rgba(255,255,255,0); 
+    border-radius: 2px;
+}
+.ol-control button {
+    background-color: rgba(34, 34, 39,.9);
+}
+
+.ol-control button:focus, .ol-control button:hover {
+    text-decoration: none;
+    background-color: rgba(64, 62, 66,.7);
+}
