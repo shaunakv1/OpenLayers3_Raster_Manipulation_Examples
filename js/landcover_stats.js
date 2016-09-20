@@ -4,7 +4,8 @@
 
 var modifyPixel = function(pixel, data) {
     var R = 0,G = 1,B = 2,A = 3;
-    data.total += 1;
+    
+    if(pixel[A] > 0) data.total += 1;
 
     if (data.lc_class) {
       var matchLab = landcoverClasses[data.lc_class].colorLab;
@@ -55,7 +56,11 @@ landcover.on('beforeoperations', function(event) {
 });
 
 landcover.on('afteroperations', function(event) {
-  displayStats({total: event.data.classes[event.data.lc_class].count });
+  displayStats({total: event.data.total },event.resolution);
+  displayStats({class_total: event.data.classes[event.data.lc_class].count },event.resolution);
+  
+  //reset
+  event.data.total
   event.data["classes"][event.data.lc_class]["count"] = 0;
 });
 
@@ -102,10 +107,15 @@ $(function() {
   });
 });
 
-function displayStats(stats){
+function displayStats(stats,resolution){
   if(stats.title) $('#stats #title').text(stats.title);
-  if(stats.total) $('#stats #total').text(stats.total);
+  if(stats.total) $('#stats #total').text(area(resolution,stats.total) + " square miles");
+  if(stats.class_total) $('#stats #class_total').text(area(resolution,stats.class_total)+ " square miles");
   if(stats.percent)$('#stats #percent').text(stats.percent);
+}
+
+function area(resolution, meterCounts){
+  return ((resolution * resolution * meterCounts) * 3.8610216e-07).toFixed(2) ; //convert sq mt to sq mi
 }
 
 function rgbaString(color) {
