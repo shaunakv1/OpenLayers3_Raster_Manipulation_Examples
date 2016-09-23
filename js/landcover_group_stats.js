@@ -50,22 +50,34 @@ landcover.on('beforeoperations', function(event) {
 
 landcover.on('afteroperations', function(event) {
   Object.keys(event.data.colorStats).forEach(function(c){
-    var cArr = c.split("-");
-    var pixel = [parseInt(cArr[0]),parseInt(cArr[1]),parseInt(cArr[2])];
-    event.data.classes.forEach(function (lcaClass,i) {
-      if(i > 0){
-        var matchLab = lcaClass.colorLab;  
-        var pixelLab = rgb2lab(pixel);
-
-        var deltaEDiff = deltaE(matchLab, pixelLab);
-        if (deltaEDiff < 3.0) {
-          lcaClass.count = event.data.colorStats[c]
-        }          
-      }
-    });
+    
+    
+    // if new pixels are found
+    if(event.data.classes[matchMap[c]] === undefined) {
+      var cArr = c.split("-");
+      var pixel = [parseInt(cArr[0]),parseInt(cArr[1]),parseInt(cArr[2])];
+      event.data.classes.forEach(function (lcaClass,i) {
+        if(i > 0){
+          var matchLab = lcaClass.colorLab;  
+          var pixelLab = rgb2lab(pixel);
+          var deltaEDiff = deltaE(matchLab, pixelLab);
+          if (deltaEDiff < 3.0) {
+            //console.log(c + " ---------> " +  lcaClass.id);
+            lcaClass.count = event.data.colorStats[c]
+          }
+          else{
+            //console.log("no Match for: ", c)
+          }          
+        }
+      });
+    }
+    else{
+      event.data.classes[matchMap[c]].count = event.data.colorStats[c];
+    }
+    
   });
-
-  displayStats({
+  //console.log(matchMap);
+  scheduleStats({
     total: event.data.total,
     classes: event.data.classes
   },event.resolution);
@@ -109,6 +121,7 @@ var map = new ol.Map({
  */
 
 $(function() {
+  initializeChart();
   landcoverClasses.forEach(function(i) {
     $('#controls').append('<section id="class_'+i.id+'" class="legenditem" data-color-id="' + i.id + '"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> <span class="value" ></span></section>');
   });
@@ -116,11 +129,22 @@ $(function() {
     landcover.set('lc_class', $(this).data('color-id'));
     landcover.changed();
     
-    displayStats({title: $(this).find('.legendname').text()});
+    scheduleStats({title: $(this).find('.legendname').text()});
   });
 });
 
+var timer = null;
+function scheduleStats(stats,resolution) {
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  timer = setTimeout(function(){ displayStats(stats,resolution) }, 1000);
+}
+
 function displayStats(stats,resolution){
+  console.log("displaying stats");
+
   if(stats.total) $('#stats #total').text(area(resolution,stats.total) + " square miles");
   if(stats.classes){
     var chartData = [];
@@ -154,8 +178,8 @@ function rgbaString(color) {
   return 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + color[3] + ')';
 }
 
-function renderChart(data){
-  $('#pieChart').highcharts({
+function initializeChart(){
+  return $('#pieChart').highcharts({
           chart: {
               plotBackgroundColor: null,
               plotBorderWidth: null,
@@ -180,7 +204,12 @@ function renderChart(data){
           series: [{
             name: 'Classes',
             colorByPoint: true,
-            data: data
+            data: []
         }]
       });
+}
+
+function renderChart(data){
+  var chart = $("#pieChart").highcharts();
+  chart.series[0].setData(data, true);
 }
