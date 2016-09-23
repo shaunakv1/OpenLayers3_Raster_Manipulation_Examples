@@ -12,7 +12,7 @@ var modifyPixel = function(pixel, data) {
       c += 1;
       data.colorStats[pixel[0] + "-" + pixel[1] + "-" + pixel[2]] = c;
     }
-    return [0,0,0,0]//pixel;
+    return pixel;//[0,0,0,0]//pixel;
   }
 
   /**
@@ -99,13 +99,13 @@ var map = new ol.Map({
         attributions: [attribution],
         url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' + 'Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
       })
-    }),
+    }),/*
     new ol.layer.Tile({
       source: new ol.source.XYZ({
         attributions: [attribution],
         url: 'https://coast.noaa.gov/arcgis/rest/services/CCAP/CCAP_landcover_2010/MapServer/tile/{z}/{y}/{x}'
       })
-    }),
+    }),*/
     new ol.layer.Image({
       source: landcover
     })
