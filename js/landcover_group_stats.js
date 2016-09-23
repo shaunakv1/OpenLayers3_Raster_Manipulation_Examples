@@ -5,17 +5,14 @@
 var modifyPixel = function(pixel, data) {
     var R = 0,G = 1,B = 2,A = 3;
     
-    if(pixel[A] > 0) data.total += 1;
-
-    data.classes.forEach(function (lcaClass,i) {
-      if(i > 0){
-        var matchLab = lcaClass.colorLab;  
-        var pixelLab = rgb2lab(pixel);
-        var deltaEDiff = deltaE(matchLab, pixelLab);
-        if (deltaEDiff < 3.0) lcaClass.count += 1;  
-      }
-    });
-    return pixel;
+    if(pixel[A] > 0) {
+      data.total += 1;
+      var c = data.colorStats[pixel[0] + "-" + pixel[1] + "-" + pixel[2]];
+      c = c || 0;
+      c += 1;
+      data.colorStats[pixel[0] + "-" + pixel[1] + "-" + pixel[2]] = c;
+    }
+    return [0,0,0,0]//pixel;
   }
 
   /**
@@ -44,6 +41,7 @@ landcover.set('lc_class', 0);
 
 landcover.on('beforeoperations', function(event) {
   event.data.total = 0;
+  event.data.colorStats = {};
   event.data.classes = landcoverClasses;
   event.data.classes.forEach(function (lcaClass) {
     lcaClass.count = 0;
@@ -51,6 +49,22 @@ landcover.on('beforeoperations', function(event) {
 });
 
 landcover.on('afteroperations', function(event) {
+  Object.keys(event.data.colorStats).forEach(function(c){
+    var cArr = c.split("-");
+    var pixel = [parseInt(cArr[0]),parseInt(cArr[1]),parseInt(cArr[2])];
+    event.data.classes.forEach(function (lcaClass,i) {
+      if(i > 0){
+        var matchLab = lcaClass.colorLab;  
+        var pixelLab = rgb2lab(pixel);
+
+        var deltaEDiff = deltaE(matchLab, pixelLab);
+        if (deltaEDiff < 3.0) {
+          lcaClass.count = event.data.colorStats[c]
+        }          
+      }
+    });
+  });
+
   displayStats({
     total: event.data.total,
     classes: event.data.classes
@@ -72,6 +86,12 @@ var map = new ol.Map({
       source: new ol.source.XYZ({
         attributions: [attribution],
         url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' + 'Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+      })
+    }),
+    new ol.layer.Tile({
+      source: new ol.source.XYZ({
+        attributions: [attribution],
+        url: 'https://coast.noaa.gov/arcgis/rest/services/CCAP/CCAP_landcover_2010/MapServer/tile/{z}/{y}/{x}'
       })
     }),
     new ol.layer.Image({
@@ -114,7 +134,6 @@ function displayStats(stats,resolution){
         color: rgbString(lcaClass.color)
       });
     });
-    console.log(check);
     renderChart(chartData);
   }  
 //area(resolution,stats.class_total)
@@ -136,7 +155,6 @@ function rgbaString(color) {
 }
 
 function renderChart(data){
-  console.log(data);
   $('#pieChart').highcharts({
           chart: {
               plotBackgroundColor: null,
