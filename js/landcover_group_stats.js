@@ -103,9 +103,19 @@ $(function() {
 function displayStats(stats,resolution){
   if(stats.total) $('#stats #total').text(area(resolution,stats.total) + " square miles");
   if(stats.classes){
+    var chartData = [];
+    var check = 0;
     stats.classes.forEach(function (lcaClass) {
       $('#class_'+lcaClass.id).find(".value").text(percent(lcaClass.count,stats.total)+ "%");
+      check = check + percent(lcaClass.count,stats.total);
+      chartData.push({
+        name: lcaClass.name,
+        y: percent(lcaClass.count,stats.total),
+        color: rgbString(lcaClass.color)
+      });
     });
+    console.log(check);
+    renderChart(chartData);
   }  
 //area(resolution,stats.class_total)
 }
@@ -117,6 +127,42 @@ function area(resolution, meterCounts){
   return ((resolution * resolution * meterCounts) * 3.8610216e-07).toFixed(2) ; //convert sq mt to sq mi
 }
 
+function rgbString(color) {
+  return 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+}
+
 function rgbaString(color) {
   return 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + color[3] + ')';
+}
+
+function renderChart(data){
+  console.log(data);
+  $('#pieChart').highcharts({
+          chart: {
+              plotBackgroundColor: null,
+              plotBorderWidth: null,
+              plotShadow: false,
+              type: 'pie'
+          },
+          title: {
+              text: null
+          },
+          tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          plotOptions: {
+              pie: {
+                  allowPointSelect: true,
+                  cursor: 'pointer',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }
+          },
+          series: [{
+            name: 'Classes',
+            colorByPoint: true,
+            data: data
+        }]
+      });
 }
