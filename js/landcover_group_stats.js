@@ -90,7 +90,7 @@ var map = new ol.Map({
 
 $(function() {
   landcoverClasses.forEach(function(i) {
-    $('#controls').append('<section class="legenditem" data-color-id="' + i.id + '"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> </section>');
+    $('#controls').append('<section id="class_'+i.id+'" class="legenditem" data-color-id="' + i.id + '"> <span class="legendcolor" style="background-color:' + rgbaString(i.color) + '">&nbsp;</span> <span class="legendname">' + i.name + '</span> <span class="value" ></span></section>');
   });
   $('.legenditem').on('click', function(evt) {
     landcover.set('lc_class', $(this).data('color-id'));
@@ -102,9 +102,17 @@ $(function() {
 
 function displayStats(stats,resolution){
   if(stats.total) $('#stats #total').text(area(resolution,stats.total) + " square miles");
-  //area(resolution,stats.class_total)
+  if(stats.classes){
+    stats.classes.forEach(function (lcaClass) {
+      $('#class_'+lcaClass.id).find(".value").text(percent(lcaClass.count,stats.total)+ "%");
+    });
+  }  
+//area(resolution,stats.class_total)
 }
 
+function percent(value,total){
+  return Math.round((value * 100) / total); 
+}
 function area(resolution, meterCounts){
   return ((resolution * resolution * meterCounts) * 3.8610216e-07).toFixed(2) ; //convert sq mt to sq mi
 }
