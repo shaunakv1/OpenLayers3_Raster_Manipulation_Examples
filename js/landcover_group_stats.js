@@ -111,8 +111,8 @@ var map = new ol.Map({
     })
   ],
   view: new ol.View({
-    center: [-10802627.683927462, 4786251.5431982465],
-    zoom: 5
+    center: [-10812411.623547956, 5050417.912951814],
+    zoom: 4
   })
 });
 
@@ -197,7 +197,7 @@ function initializeChart(){
                   allowPointSelect: true,
                   cursor: 'pointer',
                   dataLabels: {
-                      enabled: false
+                      enabled: true
                   }
               }
           },
