@@ -1,5 +1,3 @@
-# OpenLayers3_Raster_Manipulation_Examples
-This repository contains a collection of examples showing advanced raster manipulation using OpenLayers 3
+# OpenLayers3 WMS Time Dimension Demo
 
-#Check examples at: 
-[https://shaunakv1.github.io/OpenLayers3_Raster_Manipulation_Examples](https://shaunakv1.github.io/OpenLayers3_Raster_Manipulation_Examples)
+[https://shaunakv1.github.io/openlayers_wms_time/](https://shaunakv1.github.io/openlayers_wms_time/)
