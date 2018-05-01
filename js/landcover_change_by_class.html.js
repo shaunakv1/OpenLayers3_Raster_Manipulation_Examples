@@ -44,7 +44,7 @@ var modifyPixel = function(pixel1,pixel2, landcoverClass) {
       //we are looking at pixel on first raster that matches the class are trying to find change on other raster
       //if (deltaPixel1ToMatchLab < 3.0) {
         //if this source pixel changed in comparison raster
-        if (!pixelMatches(pixel1, pixel2)) {
+        if (pixel1[A] > 0 && pixel2[A] > 0 && !pixelMatches(pixel1, pixel2)) {
           return [255,0,0,255];
         }
       //}
