@@ -4,8 +4,9 @@ html,body{
 	margin: 0;
 }
 .map {
-    height: calc( 100% - 300px);
-    width: 100%;
+    height: 100%;
+    width: 50%;
+    float: left;
 }
 
 
@@ -18,12 +19,20 @@ html,body{
  .stats{
   display: inline-block;
   float: right;
-  width:40%;
+  width:50%;
+  height: 100%;
   padding: 10px;   
  }
  
+ .stats .pie-chart{
+  min-width: 310px;
+  width: 100%;
+  height: 90%;
+  margin: 0 auto
+ }
+
  .controls {
-  display: inline-block;
+  display: none;
   float: left;
   width:60%;
   -moz-column-width: 15em;
